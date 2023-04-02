@@ -20,19 +20,6 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService categoriaService;
 	
-	@GetMapping
-	public List<Categoria> listar() {
-		
-		Categoria cat1 = new Categoria(1L, "Informática");
-		Categoria cat2 = new Categoria(2L, "Escritório");
-		
-		List<Categoria> lista = new ArrayList<>();
-		lista.add(cat1);
-		lista.add(cat2);
-		
-		return lista;  
-	}
-	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
 		Categoria categoria = categoriaService.findById(id);
