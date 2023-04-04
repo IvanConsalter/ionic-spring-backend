@@ -1,12 +1,15 @@
 package com.ivanconsalter.ionicspring.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Estado implements Serializable {
@@ -18,6 +21,9 @@ public class Estado implements Serializable {
 	private Long id;
 	
 	private String nome;
+	
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<>();
 	
 	public Estado() {
 	}
@@ -41,6 +47,10 @@ public class Estado implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
 	@Override
