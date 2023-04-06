@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco implements Serializable {
@@ -30,20 +29,22 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
-	@OneToMany()
+	@ManyToOne()
 	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 	
 	public Endereco() {
 	}
 
-	public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep) {
+	public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep, Cliente cliente, Cidade cidade) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
+		this.cliente = cliente;
+		this.cidade = cidade;
 	}
 
 	public Long getId() {
@@ -92,6 +93,14 @@ public class Endereco implements Serializable {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+	
+	public Cidade getCidade() {
+		return cidade;
+	}
+	
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override

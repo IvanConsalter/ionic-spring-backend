@@ -80,6 +80,14 @@ public class Cliente implements Serializable {
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
+	
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+	
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
 
 	@Override
 	public int hashCode() {
