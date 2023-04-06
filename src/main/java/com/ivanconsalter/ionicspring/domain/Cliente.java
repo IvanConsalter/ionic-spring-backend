@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.ivanconsalter.ionicspring.domain.enums.TipoCliente;
+
 @Entity
 public class Cliente implements Serializable {
 
@@ -20,15 +22,17 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
+	private Integer tipo;
 	
 	public Cliente() {
 	}
 	
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipo = tipo.getCodigo();
 	}
 
 	public Long getId() {
@@ -61,6 +65,14 @@ public class Cliente implements Serializable {
 
 	public void setCpfOuCnpj(String cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
+	}
+	
+	public Integer getTipo() {
+		return tipo;
+	}
+	
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
