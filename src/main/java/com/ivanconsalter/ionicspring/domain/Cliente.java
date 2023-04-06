@@ -2,9 +2,13 @@ package com.ivanconsalter.ionicspring.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +33,10 @@ public class Cliente implements Serializable {
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
+	
+	@ElementCollection
+	@CollectionTable(name = "telefone")
+	private Set<String> telefones = new HashSet<>();
 	
 	public Cliente() {
 	}
@@ -87,6 +95,14 @@ public class Cliente implements Serializable {
 	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
+	}
+	
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+	
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
 	}
 
 	@Override

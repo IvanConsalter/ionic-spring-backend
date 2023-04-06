@@ -90,6 +90,8 @@ public class IonicSpringApplication implements CommandLineRunner {
 		
 		cliente.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
 		
+		cliente.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
 		clienteRepository.save(cliente);
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 		
