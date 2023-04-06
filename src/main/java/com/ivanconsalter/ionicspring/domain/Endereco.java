@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco implements Serializable {
@@ -28,6 +29,10 @@ public class Endereco implements Serializable {
 	@ManyToOne()
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	
+	@OneToMany()
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
 	
 	public Endereco() {
 	}
