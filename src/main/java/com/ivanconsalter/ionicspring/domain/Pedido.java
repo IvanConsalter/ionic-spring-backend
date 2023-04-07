@@ -77,6 +77,14 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 	}
 	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+	
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

@@ -1,5 +1,6 @@
 package com.ivanconsalter.ionicspring;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.ivanconsalter.ionicspring.domain.Cidade;
 import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.domain.Endereco;
 import com.ivanconsalter.ionicspring.domain.Estado;
+import com.ivanconsalter.ionicspring.domain.Pagamento;
+import com.ivanconsalter.ionicspring.domain.PagamentoComBoleto;
+import com.ivanconsalter.ionicspring.domain.PagamentoComCartao;
+import com.ivanconsalter.ionicspring.domain.Pedido;
 import com.ivanconsalter.ionicspring.domain.Produto;
+import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
 import com.ivanconsalter.ionicspring.domain.enums.TipoCliente;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
 import com.ivanconsalter.ionicspring.repositories.CidadeRepository;
 import com.ivanconsalter.ionicspring.repositories.ClienteRepository;
 import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
 import com.ivanconsalter.ionicspring.repositories.EstadoRepository;
+import com.ivanconsalter.ionicspring.repositories.PagamentoRepository;
+import com.ivanconsalter.ionicspring.repositories.PedidoRepository;
 import com.ivanconsalter.ionicspring.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,6 +49,12 @@ public class IonicSpringApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IonicSpringApplication.class, args);
@@ -94,6 +108,20 @@ public class IonicSpringApplication implements CommandLineRunner {
 		
 		clienteRepository.save(cliente);
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+		
+		Pedido pedido1 = new Pedido(null, LocalDateTime.now(), endereco1, cliente);
+		Pedido pedido2 = new Pedido(null, LocalDateTime.now(), endereco2, cliente);
+		
+		Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
+		pedido1.setPagamento(pagamento1);
+		
+		Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, LocalDateTime.now().plusMonths(1), null);
+		pedido2.setPagamento(pagamento2);
+		
+		cliente.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+		
+		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
 		
 	}
 

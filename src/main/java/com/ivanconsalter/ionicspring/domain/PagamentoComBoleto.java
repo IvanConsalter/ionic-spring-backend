@@ -2,8 +2,11 @@ package com.ivanconsalter.ionicspring.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+
 import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComBoleto extends Pagamento {
 
 	private static final long serialVersionUID = 1L;
