@@ -7,11 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
 
 @Entity
-public class Pagamento implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -20,14 +26,20 @@ public class Pagamento implements Serializable {
 	private Long id;
 	
 	private Integer estado;
+	
+	@OneToOne
+	@JoinColumn(name = "pedido_id")
+	@MapsId
+	private Pedido pedido;
 
 	public Pagamento() {
 	}
 
-	public Pagamento(Long id, EstadoPagamento estadoPagamento) {
+	public Pagamento(Long id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
 		this.id = id;
 		this.estado = estadoPagamento.getCodigo();
+		this.pedido = pedido;
 	}
 
 	public Long getId() {
@@ -46,6 +58,14 @@ public class Pagamento implements Serializable {
 		this.estado = estado;
 	}
 
+	public Pedido getPedido() {
+		return pedido;
+	}
+	
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
