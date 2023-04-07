@@ -26,13 +26,18 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+	
 	public Pedido() {
 	}
 
-	public Pedido(Long id, LocalDateTime instante, Endereco enderecoDeEntrega) {
+	public Pedido(Long id, LocalDateTime instante, Endereco enderecoDeEntrega, Cliente cliente) {
 		this.id = id;
 		this.instante = instante;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+		this.cliente = cliente;
 	}
 
 	public Long getId() {
@@ -59,6 +64,14 @@ public class Pedido implements Serializable {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
