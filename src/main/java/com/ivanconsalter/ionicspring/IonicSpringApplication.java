@@ -109,19 +109,19 @@ public class IonicSpringApplication implements CommandLineRunner {
 		clienteRepository.save(cliente);
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 		
-		Pedido pedido1 = new Pedido(null, LocalDateTime.now(), endereco1, cliente);
-		Pedido pedido2 = new Pedido(null, LocalDateTime.now(), endereco2, cliente);
-		
-		Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
-		pedido1.setPagamento(pagamento1);
-		
-		Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, LocalDateTime.now().plusMonths(1), null);
-		pedido2.setPagamento(pagamento2);
-		
-		cliente.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
-		
-		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
-		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+//		Pedido pedido1 = new Pedido(null, LocalDateTime.now(), endereco1, cliente);
+//		Pedido pedido2 = new Pedido(null, LocalDateTime.now(), endereco2, cliente);
+//		
+//		Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
+//		pedido1.setPagamento(pagamento1);
+//		
+//		Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, LocalDateTime.now().plusMonths(1), null);
+//		pedido2.setPagamento(pagamento2);
+//		
+//		cliente.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+//		
+//		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+//		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
 		
 	}
 
