@@ -2,11 +2,13 @@ package com.ivanconsalter.ionicspring.services;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.ionicspring.domain.Categoria;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
 import com.ivanconsalter.ionicspring.resources.exception.ResourceNotFoundException;
+import com.ivanconsalter.ionicspring.services.exceptions.DataIntegrityException;
 
 @Service
 public class CategoriaService {
@@ -26,14 +28,21 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria categoriaAtualizada, Long id) {
-		Categoria categoriaAntesAtualizar = categoriaRepository.findById(id)
-				.orElseThrow( 
-						() -> new ResourceNotFoundException(
-								"Recurso não encontrado. Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		Categoria categoriaAntesAtualizar = findById(id);
 		
 		BeanUtils.copyProperties(categoriaAtualizada, categoriaAntesAtualizar, "id");
 
 		return categoriaRepository.save(categoriaAtualizada);
+	}
+	
+	public void delete(Long id) {
+		findById(id);
+		
+		try {
+			categoriaRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não foi possível excluir uma categoria que possui produtos");
+		}
 	}
 
 }
