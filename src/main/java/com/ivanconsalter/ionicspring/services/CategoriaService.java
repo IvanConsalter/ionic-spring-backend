@@ -1,5 +1,6 @@
 package com.ivanconsalter.ionicspring.services;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,22 @@ public class CategoriaService {
 		return categoriaRepository.findById(id)
 				.orElseThrow( 
 						() -> new ResourceNotFoundException(
-								"Recurso não encontrado. Id: " + id + ", Tipo: " + Categoria.class.getName()
-							)
-					);
+								"Recurso não encontrado. Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
 	public Categoria save(Categoria categoria) {
 		return categoriaRepository.save(categoria);
+	}
+	
+	public Categoria update(Categoria categoriaAtualizada, Long id) {
+		Categoria categoriaAntesAtualizar = categoriaRepository.findById(id)
+				.orElseThrow( 
+						() -> new ResourceNotFoundException(
+								"Recurso não encontrado. Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		
+		BeanUtils.copyProperties(categoriaAtualizada, categoriaAntesAtualizar, "id");
+
+		return categoriaRepository.save(categoriaAtualizada);
 	}
 
 }
