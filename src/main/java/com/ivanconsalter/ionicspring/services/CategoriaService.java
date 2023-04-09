@@ -15,7 +15,7 @@ import com.ivanconsalter.ionicspring.domain.Categoria;
 import com.ivanconsalter.ionicspring.dto.CategoriaDTO;
 import com.ivanconsalter.ionicspring.mapper.CategoriaMapper;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
-import com.ivanconsalter.ionicspring.resources.exception.ResourceNotFoundException;
+import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
 @Service
 public class CategoriaService {

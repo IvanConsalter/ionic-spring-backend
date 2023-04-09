@@ -1,4 +1,4 @@
-package com.ivanconsalter.ionicspring.resources.exception;
+package com.ivanconsalter.ionicspring.services.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
