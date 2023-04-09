@@ -1,16 +1,19 @@
 package com.ivanconsalter.ionicspring.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.ionicspring.domain.Categoria;
 import com.ivanconsalter.ionicspring.dto.CategoriaDTO;
+import com.ivanconsalter.ionicspring.mapper.CategoriaMapper;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
 import com.ivanconsalter.ionicspring.resources.exception.ResourceNotFoundException;
 
@@ -21,12 +24,19 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private CategoriaMapper categoriaMapper;
 	
 	public List<CategoriaDTO> findAll() {
 		List<Categoria> list = categoriaRepository.findAll();
 		
-		return list.stream().map( (categoria) -> modelMapper.map(categoria, CategoriaDTO.class)).collect(Collectors.toList());
+		return categoriaMapper.toListDTO(list);
+	}
+	
+	public Page<CategoriaDTO> findByPage(Integer page, Integer size, String direction, String orderBy) {
+		Pageable pageable = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
+		
+		Page<Categoria> listPage = categoriaRepository.findAll(pageable);
+		return categoriaMapper.toPageDTO(listPage);
 	}
 	
 	public Categoria findById(Long id) {
