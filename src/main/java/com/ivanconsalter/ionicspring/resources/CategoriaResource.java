@@ -3,6 +3,8 @@ package com.ivanconsalter.ionicspring.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -52,15 +54,15 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
-		Categoria categoriaSalva = categoriaService.save(categoria);
+	public ResponseEntity<CategoriaDTO> save(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+		CategoriaDTO categoriaDTOSalva = categoriaService.save(categoriaDTO);
 		URI uri = ServletUriComponentsBuilder
 						.fromCurrentRequest()
 						.path("/{id}")
-						.buildAndExpand(categoriaSalva.getId())
+						.buildAndExpand(categoriaDTOSalva.getId())
 						.toUri();
 		
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		return ResponseEntity.created(uri).body(categoriaDTOSalva);
 	}
 	
 	@PutMapping(path = "/{id}")

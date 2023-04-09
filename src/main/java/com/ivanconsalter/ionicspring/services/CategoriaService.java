@@ -46,8 +46,9 @@ public class CategoriaService {
 								"Recurso não encontrado. Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
-	public Categoria save(Categoria categoria) {
-		return categoriaRepository.save(categoria);
+	public CategoriaDTO save(CategoriaDTO categoriaDTO) {
+		Categoria categoriaSalva = categoriaRepository.save(categoriaMapper.toEntity(categoriaDTO));
+		return categoriaMapper.toDTO(categoriaSalva);
 	}
 	
 	public Categoria update(Categoria categoriaAtualizada, Long id) {

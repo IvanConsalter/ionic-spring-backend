@@ -39,5 +39,8 @@ public class CategoriaMapper {
 		return new PageImpl<>(categoriaDTOList, page.getPageable(), page.getTotalElements());
 	}
 	
+	public Categoria toEntity(CategoriaDTO categoriaDTO) {
+		return modelMapper.map(categoriaDTO, Categoria.class);
+	}
 
 }
