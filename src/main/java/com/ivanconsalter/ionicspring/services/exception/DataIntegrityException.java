@@ -1,4 +1,4 @@
-package com.ivanconsalter.ionicspring.services.exceptions;
+package com.ivanconsalter.ionicspring.services.exception;
 
 public class DataIntegrityException extends RuntimeException {
 

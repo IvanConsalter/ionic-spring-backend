@@ -1,6 +1,7 @@
 package com.ivanconsalter.ionicspring.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService categoriaService;
+	
+	@GetMapping
+	public ResponseEntity<List<Categoria>> findAll() {
+		List<Categoria> list = categoriaService.findAll(); 
+		return ResponseEntity.ok().body(list);
+	}
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
