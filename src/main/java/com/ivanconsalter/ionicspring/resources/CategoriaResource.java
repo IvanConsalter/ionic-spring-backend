@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ivanconsalter.ionicspring.domain.Categoria;
+import com.ivanconsalter.ionicspring.dto.CategoriaDTO;
 import com.ivanconsalter.ionicspring.services.CategoriaService;
 
 @RestController
@@ -26,9 +27,9 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
-		List<Categoria> list = categoriaService.findAll(); 
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<CategoriaDTO> listDto = categoriaService.findAll(); 
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping(path = "/{id}")

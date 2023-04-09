@@ -1,13 +1,16 @@
 package com.ivanconsalter.ionicspring.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.ionicspring.domain.Categoria;
+import com.ivanconsalter.ionicspring.dto.CategoriaDTO;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
 import com.ivanconsalter.ionicspring.resources.exception.ResourceNotFoundException;
 
@@ -17,8 +20,13 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public List<Categoria> findAll() {
-		return categoriaRepository.findAll();
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	public List<CategoriaDTO> findAll() {
+		List<Categoria> list = categoriaRepository.findAll();
+		
+		return list.stream().map( (categoria) -> modelMapper.map(categoria, CategoriaDTO.class)).collect(Collectors.toList());
 	}
 	
 	public Categoria findById(Long id) {
