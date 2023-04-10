@@ -15,6 +15,7 @@ import com.ivanconsalter.ionicspring.domain.Categoria;
 import com.ivanconsalter.ionicspring.dto.CategoriaDTO;
 import com.ivanconsalter.ionicspring.mapper.CategoriaMapper;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
+import com.ivanconsalter.ionicspring.services.exception.DataIntegrityException;
 import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
 @Service
@@ -65,7 +66,7 @@ public class CategoriaService {
 		try {
 			categoriaRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não foi possível excluir uma categoria que possui produtos");
+			throw new DataIntegrityException("Não foi possível excluir uma categoria que possui produtos");
 		}
 	}
 
