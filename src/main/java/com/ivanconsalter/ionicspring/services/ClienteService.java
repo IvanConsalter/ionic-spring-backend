@@ -1,5 +1,6 @@
 package com.ivanconsalter.ionicspring.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -10,11 +11,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
+import com.ivanconsalter.ionicspring.domain.Endereco;
 import com.ivanconsalter.ionicspring.dto.ClienteDTO;
+import com.ivanconsalter.ionicspring.dto.ClienteInputDTO;
+import com.ivanconsalter.ionicspring.dto.EnderecoDTO;
 import com.ivanconsalter.ionicspring.mapper.ClienteMapper;
+import com.ivanconsalter.ionicspring.mapper.EnderecoMapper;
 import com.ivanconsalter.ionicspring.repositories.ClienteRepository;
+import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
 import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
 @Service
@@ -25,6 +32,12 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteMapper clienteMapper;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private EnderecoMapper enderecoMapper;
 	
 	public List<ClienteDTO> findAll() {
 		List<Cliente> list = clienteRepository.findAll();
@@ -44,6 +57,25 @@ public class ClienteService {
 				.orElseThrow( 
 						() -> new ResourceNotFoundException(
 								"Recurso não encontrado. Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+	
+	@Transactional
+	public Cliente save(ClienteInputDTO clienteInputDTO) {
+		Cliente novoCliente = clienteMapper.fromClienteInputDTOtoEntity(clienteInputDTO);
+		
+		Cliente clienteSalvo = clienteRepository.save(novoCliente);
+		
+		List<EnderecoDTO> enderecosDto = new ArrayList<>();
+		
+		for( EnderecoDTO enderecoDto : clienteInputDTO.getEnderecos()) {
+			enderecoDto.setClienteId(clienteSalvo.getId());
+			enderecosDto.add(enderecoDto);
+		}
+		
+		List<Endereco> enderecos = enderecoMapper.toListEntity(enderecosDto);
+		enderecoRepository.saveAll(enderecos);
+		
+		return findById(novoCliente.getId());
 	}
 	
 	public Cliente update(Cliente clienteAtualizada, Long id) {

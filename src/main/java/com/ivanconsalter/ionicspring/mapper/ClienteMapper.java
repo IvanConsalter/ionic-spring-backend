@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.dto.ClienteDTO;
+import com.ivanconsalter.ionicspring.dto.ClienteInputDTO;
 
 @Component
 public class ClienteMapper {
@@ -41,6 +42,10 @@ public class ClienteMapper {
 	
 	public Cliente toEntity(ClienteDTO clienteDTO) {
 		return modelMapper.map(clienteDTO, Cliente.class);
+	}
+	
+	public Cliente fromClienteInputDTOtoEntity(ClienteInputDTO clienteInputDTO) {
+		return modelMapper.map(clienteInputDTO, Cliente.class);
 	}
 
 }

@@ -98,6 +98,14 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	public Cidade getCidade() {
 		return cidade;
 	}
