@@ -22,6 +22,7 @@ import com.ivanconsalter.ionicspring.mapper.ClienteMapper;
 import com.ivanconsalter.ionicspring.mapper.EnderecoMapper;
 import com.ivanconsalter.ionicspring.repositories.ClienteRepository;
 import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
+import com.ivanconsalter.ionicspring.services.exception.DataIntegrityException;
 import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
 @Service
@@ -92,7 +93,7 @@ public class ClienteService {
 		try {
 			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não foi possível excluir um cliente que possui entidades relacionadas");
+			throw new DataIntegrityException("Não foi possível excluir um cliente que possui pedidos relacionados");
 		}
 	}
 
