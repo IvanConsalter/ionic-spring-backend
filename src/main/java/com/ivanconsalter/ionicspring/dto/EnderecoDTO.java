@@ -2,19 +2,32 @@ package com.ivanconsalter.ionicspring.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EnderecoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String numero;
+	
 	private String complemento;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String bairro;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String cep;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private Long clienteId;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private Long cidadeId;
 	
 	public EnderecoDTO() {

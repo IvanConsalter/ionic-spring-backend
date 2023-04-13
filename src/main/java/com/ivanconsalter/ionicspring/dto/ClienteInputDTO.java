@@ -6,17 +6,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.ivanconsalter.ionicspring.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteInputDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Size(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 
 	private List<EnderecoDTO> enderecos = new ArrayList<>();
 	
+	@NotEmpty(message="Deve informar ao menos um telefone")
 	private Set<String> telefones = new HashSet<>();
 	
 	public ClienteInputDTO() {
