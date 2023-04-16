@@ -68,10 +68,9 @@ public class ClienteResource {
 	}
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<Cliente> update(@RequestBody Cliente cliente, @PathVariable Long id) {
-		Cliente clienteAtualizada = clienteService.update(cliente, id);
-		
-		return ResponseEntity.ok(clienteAtualizada);
+	public ResponseEntity<ClienteDTO> update(@Valid @RequestBody ClienteDTO clienteDto, @PathVariable Long id) {
+		ClienteDTO dto = clienteService.update(clienteDto, id);
+		return ResponseEntity.ok(dto);
 	}
 	
 	@DeleteMapping(path = "/{id}")

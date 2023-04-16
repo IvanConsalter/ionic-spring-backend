@@ -79,12 +79,13 @@ public class ClienteService {
 		return findById(novoCliente.getId());
 	}
 	
-	public Cliente update(Cliente clienteAtualizada, Long id) {
+	public ClienteDTO update(ClienteDTO clienteAtualizada, Long id) {
 		Cliente clienteAntesAtualizar = findById(id);
-		
-		BeanUtils.copyProperties(clienteAtualizada, clienteAntesAtualizar, "id");
 
-		return clienteRepository.save(clienteAtualizada);
+		BeanUtils.copyProperties(clienteAtualizada, clienteAntesAtualizar, "id", "cpfOuCnpj", "tipo", "telefones");
+
+		Cliente clienteDepoisAtualizadar = clienteRepository.save(clienteAntesAtualizar);
+		return clienteMapper.toDTO(clienteDepoisAtualizadar);
 	}
 	
 	public void delete(Long id) {
