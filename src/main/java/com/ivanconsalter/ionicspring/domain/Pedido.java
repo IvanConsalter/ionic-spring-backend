@@ -1,8 +1,11 @@
 package com.ivanconsalter.ionicspring.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
 
 @Entity
 public class Pedido implements Serializable {
@@ -131,7 +135,28 @@ public class Pedido implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", instante=" + instante + "]";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("Pedido número: ");
+		stringBuilder.append(getId());
+		stringBuilder.append(", Instante: ");
+		stringBuilder.append(getInstante().format(formatter));
+		stringBuilder.append(", Cliente: ");
+		stringBuilder.append(getCliente().getNome());
+		stringBuilder.append(", Situação do pagamento: ");
+		stringBuilder.append(EstadoPagamento.toEnum(getPagamento().getEstado()));
+		stringBuilder.append("\nDetalhes:\n");
+		
+		for(ItemPedido ip: getItens()) {
+			stringBuilder.append(ip.toString());
+		}
+		
+		stringBuilder.append("Valor Total: ");
+		stringBuilder.append(numberFormat.format(getTotal()));
+		
+		return stringBuilder.toString();
 	}
 	
 }

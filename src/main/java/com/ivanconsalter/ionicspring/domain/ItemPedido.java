@@ -1,6 +1,8 @@
 package com.ivanconsalter.ionicspring.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.persistence.EmbeddedId;
@@ -102,6 +104,22 @@ public class ItemPedido implements Serializable {
 			return false;
 		ItemPedido other = (ItemPedido) obj;
 		return Objects.equals(id, other.id);
+	}
+	
+	@Override
+	public String toString() {
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(getProduto().getNome());
+		stringBuilder.append(", Quantidade: ");
+		stringBuilder.append(getQuantidade());
+		stringBuilder.append(", Preço unitário: ");
+		stringBuilder.append(numberFormat.format(getPreco()));
+		stringBuilder.append(", Subtotal: ");
+		stringBuilder.append(numberFormat.format(getSubTotal()));
+		stringBuilder.append("\n");
+		
+		return stringBuilder.toString();
 	}
 	
 }
