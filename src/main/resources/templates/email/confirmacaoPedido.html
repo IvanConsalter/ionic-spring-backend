@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Confirmação de pedido</title>
+</head>
+
+<style>
+	table {
+		font-family: Arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	th {
+		background-color: #0047b3;
+		color: white;
+		padding: 10px;
+		text-align: left;
+		border: 1px solid #ddd;
+	}
+
+	td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	tr:hover {
+		background-color: #ddd;
+	}
+</style>
+
+<body>
+	<h1>Confirmação de pedido</h1>
+	<p>Olá [NOME DO CLIENTE],</p>
+	<p>Agradecemos pelo seu pedido número [NÚMERO DO PEDIDO].</p>
+	<p>Segue abaixo o resumo do seu pedido:</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>Quantidade</th>
+				<th>Preço unitário (R$)</th>
+				<th>Subtotal (R$)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Camiseta Branca</td>
+				<td>2</td>
+				<td>25,00</td>
+				<td>50,00</td>
+			</tr>
+			<tr>
+				<td>Calça Jeans</td>
+				<td>1</td>
+				<td>89,90</td>
+				<td>89,90</td>
+			</tr>
+			<tr>
+				<td>Tênis Preto</td>
+				<td>1</td>
+				<td>120,00</td>
+				<td>120,00</td>
+			</tr>
+			<tr>
+				<td>Meias Brancas</td>
+				<td>3</td>
+				<td>5,00</td>
+				<td>15,00</td>
+			</tr>
+			<tr>
+				<td>Cinto Marrom</td>
+				<td>1</td>
+				<td>35,00</td>
+				<td>35,00</td>
+			</tr>
+			<tr>
+				<td>Total a pagar (R$)</td>
+				<td></td>
+				<td></td>
+				<td>309,90</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>O valor total do seu pedido é R$ [VALOR TOTAL DO PEDIDO].</p>
+	<p>Seu pedido será enviado para o endereço [ENDEREÇO DE ENTREGA] em breve.</p>
+	<p>Caso tenha alguma dúvida ou precise de ajuda, entre em contato conosco.</p>
+	<p>Obrigado por escolher a nossa loja!</p>
+</body>
+
+</html>
