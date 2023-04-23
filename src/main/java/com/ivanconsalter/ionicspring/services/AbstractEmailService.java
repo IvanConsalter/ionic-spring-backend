@@ -6,16 +6,16 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import com.ivanconsalter.ionicspring.config.property.IonicSpringProperty;
 import com.ivanconsalter.ionicspring.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
 
-	@Value("${default.sender}")
-	private String sender;
+	@Autowired
+	private IonicSpringProperty ionicSpringProperty;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -30,7 +30,7 @@ public abstract class AbstractEmailService implements EmailService {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
-			mimeMessageHelper.setFrom(sender);
+			mimeMessageHelper.setFrom(ionicSpringProperty.getMail().getHost());
 			mimeMessageHelper.setTo(pedido.getCliente().getEmail());
 			mimeMessageHelper.setSubject("Pedido confirmado! Código: " + pedido.getId());
 			mimeMessageHelper.setSentDate(new Date(System.currentTimeMillis()));
