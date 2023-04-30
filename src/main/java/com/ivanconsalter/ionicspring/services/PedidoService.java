@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
+import com.ivanconsalter.ionicspring.domain.Endereco;
 import com.ivanconsalter.ionicspring.domain.ItemPedido;
 import com.ivanconsalter.ionicspring.domain.PagamentoComBoleto;
 import com.ivanconsalter.ionicspring.domain.Pedido;
 import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
+import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
 import com.ivanconsalter.ionicspring.repositories.ItemPedidoRepository;
 import com.ivanconsalter.ionicspring.repositories.PagamentoRepository;
 import com.ivanconsalter.ionicspring.repositories.PedidoRepository;
@@ -29,6 +31,9 @@ public class PedidoService {
 
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	@Autowired
 	private ProdutoService produtoService;
@@ -54,6 +59,9 @@ public class PedidoService {
 		pedido.setCliente(clienteService.findById(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE.getCodigo());
 		pedido.getPagamento().setPedido(pedido);
+		
+		Endereco endereco = enderecoRepository.findById(pedido.getEnderecoDeEntrega().getId()).get();
+		pedido.setEnderecoDeEntrega(endereco);
 		
 		if(pedido.getPagamento() instanceof PagamentoComBoleto) {
 			PagamentoComBoleto pagtoBoleto = (PagamentoComBoleto) pedido.getPagamento();
