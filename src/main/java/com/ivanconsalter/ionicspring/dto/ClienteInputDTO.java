@@ -26,6 +26,9 @@ public class ClienteInputDTO implements Serializable {
 	private String email;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
+	private String senha;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String cpfOuCnpj;
 	
 	private Integer tipo;
@@ -52,6 +55,14 @@ public class ClienteInputDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getCpfOuCnpj() {

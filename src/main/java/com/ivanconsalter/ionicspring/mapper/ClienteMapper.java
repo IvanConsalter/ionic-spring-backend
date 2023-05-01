@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
@@ -18,6 +19,9 @@ public class ClienteMapper {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public ClienteMapper() {
 	}
@@ -45,7 +49,11 @@ public class ClienteMapper {
 	}
 	
 	public Cliente fromClienteInputDTOtoEntity(ClienteInputDTO clienteInputDTO) {
-		return modelMapper.map(clienteInputDTO, Cliente.class);
+		Cliente cliente = modelMapper.map(clienteInputDTO, Cliente.class);
+		
+		cliente.setSenha(passwordEncoder.encode(clienteInputDTO.getSenha()));
+		
+		return cliente;
 	}
 
 }
