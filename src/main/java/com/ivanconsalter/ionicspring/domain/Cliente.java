@@ -6,18 +6,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ivanconsalter.ionicspring.domain.enums.Perfil;
 import com.ivanconsalter.ionicspring.domain.enums.TipoCliente;
 
 @Entity
@@ -40,6 +43,10 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -61,6 +68,7 @@ public class Cliente implements Serializable {
 		this.senha = senha;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCodigo();
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Long getId() {
@@ -109,6 +117,14 @@ public class Cliente implements Serializable {
 	
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCodigo());
 	}
 	
 	public void setEnderecos(List<Endereco> enderecos) {

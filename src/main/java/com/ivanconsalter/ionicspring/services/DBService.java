@@ -19,6 +19,7 @@ import com.ivanconsalter.ionicspring.domain.PagamentoComCartao;
 import com.ivanconsalter.ionicspring.domain.Pedido;
 import com.ivanconsalter.ionicspring.domain.Produto;
 import com.ivanconsalter.ionicspring.domain.enums.EstadoPagamento;
+import com.ivanconsalter.ionicspring.domain.enums.Perfil;
 import com.ivanconsalter.ionicspring.domain.enums.TipoCliente;
 import com.ivanconsalter.ionicspring.repositories.CategoriaRepository;
 import com.ivanconsalter.ionicspring.repositories.CidadeRepository;
@@ -128,15 +129,21 @@ public class DBService {
 		
 		Cliente cliente = new Cliente(null, "Maria Silva", "ivanymorilas@gmail.com", passwordEncoder.encode("123"), "35378912377", TipoCliente.PESSOAFISICA);
 		
+		Cliente cliente2 = new Cliente(null, "Ana Costa", "nelio.iftm@gmail.com", passwordEncoder.encode("123"), "31628382740", TipoCliente.PESSOAFISICA);
+		cliente2.addPerfil(Perfil.ADMIN);
+		
 		Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cliente, cidade1);
 		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", null, "Centro", "38777012", cliente, cidade2);
+		Endereco endereco3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cliente2, cidade2);
 		
 		cliente.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+		cliente2.getEnderecos().addAll(Arrays.asList(endereco3));
 		
 		cliente.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		cliente2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
 		
-		clienteRepository.save(cliente);
-		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+		clienteRepository.saveAll(Arrays.asList(cliente, cliente2));
+		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3));
 		
 		Pedido pedido1 = new Pedido(null, LocalDateTime.now(), endereco1, cliente);
 		Pedido pedido2 = new Pedido(null, LocalDateTime.now(), endereco2, cliente);
