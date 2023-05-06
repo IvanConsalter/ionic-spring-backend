@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.domain.Endereco;
+import com.ivanconsalter.ionicspring.domain.enums.Perfil;
 import com.ivanconsalter.ionicspring.dto.ClienteDTO;
 import com.ivanconsalter.ionicspring.dto.ClienteInputDTO;
 import com.ivanconsalter.ionicspring.dto.EnderecoDTO;
@@ -22,6 +23,8 @@ import com.ivanconsalter.ionicspring.mapper.ClienteMapper;
 import com.ivanconsalter.ionicspring.mapper.EnderecoMapper;
 import com.ivanconsalter.ionicspring.repositories.ClienteRepository;
 import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
+import com.ivanconsalter.ionicspring.security.UserSecurity;
+import com.ivanconsalter.ionicspring.services.exception.AuthorizationException;
 import com.ivanconsalter.ionicspring.services.exception.DataIntegrityException;
 import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
@@ -54,6 +57,12 @@ public class ClienteService {
 	}
 	
 	public Cliente findById(Long id) {
+		
+		UserSecurity user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		return clienteRepository.findById(id)
 				.orElseThrow( 
 						() -> new ResourceNotFoundException(
