@@ -3,6 +3,10 @@ package com.ivanconsalter.ionicspring.services;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
@@ -15,6 +19,8 @@ import com.ivanconsalter.ionicspring.repositories.EnderecoRepository;
 import com.ivanconsalter.ionicspring.repositories.ItemPedidoRepository;
 import com.ivanconsalter.ionicspring.repositories.PagamentoRepository;
 import com.ivanconsalter.ionicspring.repositories.PedidoRepository;
+import com.ivanconsalter.ionicspring.security.UserSecurity;
+import com.ivanconsalter.ionicspring.services.exception.AuthorizationException;
 import com.ivanconsalter.ionicspring.services.exception.ResourceNotFoundException;
 
 @Service
@@ -51,6 +57,18 @@ public class PedidoService {
 								"Recurso não encontrado. Id: " + id + ", Tipo: " + Cliente.class.getName()
 							)
 					);
+	}
+	
+	public Page<Pedido> findByPage(Integer page, Integer size, String direction, String orderBy) {
+		UserSecurity user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Pageable pageable = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
+		
+		Cliente cliente =  clienteService.findById(user.getId());
+		return pedidoRepository.findByCliente(cliente, pageable);
 	}
 	
 	public Pedido save(Pedido pedido) {
