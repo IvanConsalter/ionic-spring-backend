@@ -63,6 +63,7 @@ public class IonicSpringProperty {
 
 		private String accessKeyId;
 		private String secretAccessKey;
+		private String bucket = "ionic-spring-arquivos";
 
 		public String getAccessKeyId() {
 			return accessKeyId;
@@ -78,6 +79,14 @@ public class IonicSpringProperty {
 
 		public void setSecretAccessKey(String secretAccessKey) {
 			this.secretAccessKey = secretAccessKey;
+		}
+		
+		public void setBucket(String bucket) {
+			this.bucket = bucket;
+		}
+
+		public String getBucket() {
+			return bucket;
 		}
 
 	}
