@@ -1,5 +1,6 @@
 package com.ivanconsalter.ionicspring.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.domain.Endereco;
@@ -42,6 +44,9 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoMapper enderecoMapper;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public List<ClienteDTO> findAll() {
 		List<Cliente> list = clienteRepository.findAll();
@@ -105,6 +110,10 @@ public class ClienteService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não foi possível excluir um cliente que possui pedidos relacionados");
 		}
+	}
+
+	public URI uploadProfilePicture(MultipartFile file) {
+		return s3Service.uploadFile(file);
 	}
 
 }
