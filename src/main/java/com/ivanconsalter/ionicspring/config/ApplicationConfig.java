@@ -19,5 +19,11 @@ public class ApplicationConfig {
 	
 	@Value("${ionic-spring.mail.password}")
 	private String mailPassword;
+	
+	@Value("${ionic-spring.s3.access-key-id}")
+	private String accessKeyId;
+
+	@Value("${ionic-spring.s3.secret-access-key}")
+	private String secretAccessKey;
 
 }
