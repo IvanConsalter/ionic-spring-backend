@@ -12,6 +12,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.ivanconsalter.ionicspring.config.property.IonicSpringProperty;
+import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -25,6 +26,7 @@ public abstract class AbstractEmailService implements EmailService {
 	@Autowired
 	private TemplateEngine templateEngine;
 	
+	@Override
 	public void sendOrderConfirmationEmail(Pedido pedido) {
 		MimeMessage mailSender;
 		try {
@@ -43,10 +45,18 @@ public abstract class AbstractEmailService implements EmailService {
 		
 	}
 	
-	public void sendOrderConfirmationTemplateHtmlEmail(Pedido pedido) {
+	@Override
+	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
+		MimeMessage mailSender;
+		try {
+			mailSender = prepareNewPasswordEmail(cliente, newPass);
+			sendEmail(mailSender);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		
 	}
-	
+		
 	protected MimeMessage preprareSimpleMailMessageFromPedido(Pedido pedido, Boolean isHtmlTemplate) throws MessagingException {
 
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -71,5 +81,17 @@ public abstract class AbstractEmailService implements EmailService {
 		Context context = new Context();
 		context.setVariable("pedido", pedido);
 		return templateEngine.process("email/confirmacaoPedido", context);
+	}
+	
+	protected MimeMessage prepareNewPasswordEmail(Cliente cliente, String newPass) throws MessagingException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
+		mimeMessageHelper.setTo(cliente.getEmail());
+		mimeMessageHelper.setFrom(ionicSpringProperty.getMail().getHost());
+		mimeMessageHelper.setSubject("Solicitação de nova senha");
+		mimeMessageHelper.setSentDate(new Date(System.currentTimeMillis()));
+		mimeMessageHelper.setText("Nova senha: " + newPass);
+		return mimeMessage;
 	}
 }
