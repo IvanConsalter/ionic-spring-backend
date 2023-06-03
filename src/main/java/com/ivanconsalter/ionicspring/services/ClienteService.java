@@ -85,6 +85,20 @@ public class ClienteService {
 								"Recurso não encontrado. Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 	
+	public Cliente findByEmail(String email) {
+		UserSecurity user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Cliente cliente = clienteRepository.findByEmail(email);
+		if(cliente == null) {
+			throw new ResourceNotFoundException("Recurso não encontrado. Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		
+		return cliente;
+	}
+	
 	@Transactional
 	public Cliente save(ClienteInputDTO clienteInputDTO) {
 		Cliente novoCliente = clienteMapper.fromClienteInputDTOtoEntity(clienteInputDTO);
