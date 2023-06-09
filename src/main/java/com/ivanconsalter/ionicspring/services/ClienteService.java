@@ -1,7 +1,5 @@
 package com.ivanconsalter.ionicspring.services;
 
-import java.awt.image.BufferedImage;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
 import com.ivanconsalter.ionicspring.domain.Endereco;
@@ -46,12 +43,6 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoMapper enderecoMapper;
-	
-	@Autowired
-	private S3Service s3Service;
-	
-	@Autowired
-	private ImageService imageService;
 
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
@@ -137,18 +128,4 @@ public class ClienteService {
 		}
 	}
 
-	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		UserSecurity user = UserService.authenticated();
-		if (user == null) {
-			throw new AuthorizationException("Acesso negado");
-		}
-
-		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		jpgImage = imageService.cropSquare(jpgImage);
-		jpgImage = imageService.resize(jpgImage, size);
-		
-		String fileName = prefix + user.getId() + ".jpg";
-		
-		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
-	}
 }

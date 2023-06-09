@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ivanconsalter.ionicspring.domain.Cliente;
@@ -75,12 +74,6 @@ public class ClienteResource {
 				.toUri();
 
 		return ResponseEntity.created(uri).body(novoCliente);
-	}
-	
-	@PostMapping(path = "/imagem")
-	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
-		URI uri = clienteService.uploadProfilePicture(file);
-		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(path = "/{id}")

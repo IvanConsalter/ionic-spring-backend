@@ -65,13 +65,13 @@ public class DBService {
 	private PasswordEncoder passwordEncoder;
 	
 	public void instantiateTestDatabase() {
-		Categoria cat1 = new Categoria(null, "Informática");
-		Categoria cat2 = new Categoria(null, "Escritório");
-		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
-		Categoria cat4 = new Categoria(null, "Eletrônicos");
-		Categoria cat5 = new Categoria(null, "Jardinagem");
-		Categoria cat6 = new Categoria(null, "Decoração");
-		Categoria cat7 = new Categoria(null, "Perfumaria");
+		Categoria cat1 = new Categoria(null, "Smartphones", "https://i.dummyjson.com/data/products/1/3.jpg");
+		Categoria cat2 = new Categoria(null, "Laptops", "https://i.dummyjson.com/data/products/9/1.jpg");
+		Categoria cat3 = new Categoria(null, "Joias", "https://i.dummyjson.com/data/products/76/2.jpg");
+		Categoria cat4 = new Categoria(null, "Calçados Femininos", "https://i.dummyjson.com/data/products/46/4.jpg");
+		Categoria cat5 = new Categoria(null, "Calçados Masculinos", "https://i.dummyjson.com/data/products/56/thumbnail.jpg");
+		Categoria cat6 = new Categoria(null, "Óculos", "https://i.dummyjson.com/data/products/82/4.jpg");
+		Categoria cat7 = new Categoria(null, "Perfumaria", "https://i.dummyjson.com/data/products/12/1.jpg");
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
