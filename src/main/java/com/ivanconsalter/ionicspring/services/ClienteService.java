@@ -106,7 +106,7 @@ public class ClienteService {
 		List<Endereco> enderecos = enderecoMapper.toListEntity(enderecosDto);
 		enderecoRepository.saveAll(enderecos);
 		
-		return findById(novoCliente.getId());
+		return clienteSalvo;
 	}
 	
 	public ClienteDTO update(ClienteDTO clienteAtualizada, Long id) {

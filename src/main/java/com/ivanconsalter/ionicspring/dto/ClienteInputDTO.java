@@ -2,9 +2,7 @@ package com.ivanconsalter.ionicspring.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -35,8 +33,12 @@ public class ClienteInputDTO implements Serializable {
 
 	private List<EnderecoDTO> enderecos = new ArrayList<>();
 	
-	@NotEmpty(message="Deve informar ao menos um telefone")
-	private Set<String> telefones = new HashSet<>();
+	@NotEmpty(message="Preenchimento obrigatório")
+	private String telefone1;
+
+	private String telefone2;
+	
+	private String telefone3;
 	
 	public ClienteInputDTO() {
 	}
@@ -89,12 +91,28 @@ public class ClienteInputDTO implements Serializable {
 		this.enderecos = enderecos;
 	}
 	
-	public Set<String> getTelefones() {
-		return telefones;
+	public String getTelefone1() {
+		return telefone1;
 	}
 	
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+	
+	public String getTelefone2() {
+		return telefone2;
+	}
+	
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+	
+	public String getTelefone3() {
+		return telefone3;
+	}
+	
+	public void setTelefone3(String telefone3) {
+		this.telefone3 = telefone3;
 	}
 	
 }

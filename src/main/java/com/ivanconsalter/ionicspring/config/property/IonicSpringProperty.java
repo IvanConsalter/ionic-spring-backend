@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class IonicSpringProperty {
 	
+	private final String originPermitida = "http://localhost:4200";
+	
 	private final Mail mail = new Mail();
 	
 	private final S3 s3 = new S3();
@@ -19,6 +21,10 @@ public class IonicSpringProperty {
 		return s3;
 	}
 	
+	public String getOriginPermitida() {
+		return originPermitida;
+	}
+
 	public static class Mail {
 		
 		private String host;
